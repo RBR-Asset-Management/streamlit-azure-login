@@ -4,6 +4,10 @@ from dataclasses import dataclass
 
 from time import sleep
 from datetime import datetime
+from typing import Callable
+from functools import wraps
+
+from streamlit import session_state
 
 
 @dataclass
@@ -20,6 +24,38 @@ class Account:
             self.token_expire_date = datetime.fromisoformat(
                 self._token_expire_date.replace("Z", "")
             )
+
+
+class RequiredLogin(Exception):
+    def __init__(self, msg=None):
+        self.msg = msg
+
+    def __str__(self):
+        if self.msg:
+            return self.msg
+
+
+class ExpiredToken(Exception):
+    def __init__(self, msg=None):
+        self.msg = msg
+
+    def __str__(self):
+        if self.msg:
+            return self.msg
+
+
+def token_required(func: Callable):
+    @wraps(func)
+    def check_token(*args, **kwargs):
+        if not session_state.account.autenticated:
+            raise RequiredLogin("Login necessário")
+
+        if session_state.account.token_expire_date < datetime.now():
+            raise ExpiredToken("Token Expirado")
+
+        return func(*args, **kwargs)
+
+    return check_token
 
 
 # Create a _RELEASE constant. We'll set this to False while we're developing
