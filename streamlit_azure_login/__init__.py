@@ -47,7 +47,7 @@ class ExpiredToken(Exception):
 def token_required(func: Callable):
     @wraps(func)
     def check_token(*args, **kwargs):
-        if not session_state.account.autenticated:
+        if not session_state.account.authenticated:
             raise RequiredLogin("Login necessário")
 
         if session_state.account.token_expire_date < datetime.now():
@@ -105,6 +105,7 @@ def azure_login(
     authority: str,
     redirect_uri: str,
     custom_labels: dict | None = None,
+    key="account",
 ) -> Account:
     """Create an instance of the azure_login component. Compatible with Azure AD organizations.
 
@@ -143,7 +144,7 @@ def azure_login(
     while auth is None:
         sleep(0.1)
 
-    if "account" not in session_state:
-        session_state.account = Account(**auth)
+    if key not in session_state:
+        session_state[key] = Account(**auth)
     else:
-        session_state.account = Account(**auth)
+        session_state[key] = Account(**auth)
