@@ -122,7 +122,7 @@ def azure_login(
         - errorFatal: text to be show if an error occurs
 
     Returns:
-        Account: returns an Account object with the token and user info when autenticated.
+        create or updates the account key on session_state with Account object containing the token and user info when autenticated.
         When the user is not autenticated the object contains False on the autenticated flags and None in everything else.
     """
 
@@ -143,11 +143,7 @@ def azure_login(
     while auth is None:
         sleep(0.1)
 
-    # We could modify the value returned from the component if we wanted.
-    # There's no need to do this in our simple example - but it's an option.
-    return Account(**auth)
-
-
-# Add some test code to play with the component while it's in development.
-# During development, we can run this just as we would any other Streamlit
-# # app: `$ streamlit run my_component/__init__.py`
+    if "account" not in session_state:
+        session_state.account = Account(**auth)
+    else:
+        session_state.account = Account(**auth)
