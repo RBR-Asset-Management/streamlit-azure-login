@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="streamlit_azure_login",
-    version="1.0.7",
+    version="1.0.8",
     author="Thomaz Pougy",
     author_email="tp@rbrasset.com.br",
     description="Componente streamlit para autenticar usuários no azure AD",
