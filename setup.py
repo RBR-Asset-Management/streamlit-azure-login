@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="streamlit_azure_login",
-    version="1.0.9",
+    version="1.0.10",
     author="Thomaz Pougy",
     author_email="tp@rbrasset.com.br",
     description="Componente streamlit para autenticar usuários no azure AD",
@@ -15,9 +15,6 @@ setuptools.setup(
     classifiers=[],
     python_requires=">=3.6",
     install_requires=[
-        # By definition, a Custom Component depends on Streamlit.
-        # If your component has other Python dependencies, list
-        # them here.
         "streamlit >= 0.63",
     ],
 )
