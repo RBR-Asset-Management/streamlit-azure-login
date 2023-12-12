@@ -10,7 +10,7 @@ setuptools.setup(
     long_description_content_type="text/plain",
     url="",
     packages=setuptools.find_packages(),
-    package_data={"streamlit_azure_login": ["frontend/**/*"]},
+    package_data={"streamlit_azure_login": ["frontend/**/*", "frontend/**"]},
     include_package_data=True,
     classifiers=[],
     python_requires=">=3.6",
